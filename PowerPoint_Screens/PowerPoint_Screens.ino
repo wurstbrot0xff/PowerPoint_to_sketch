@@ -1,14 +1,15 @@
 /*
 This code was automatically generated from graphic elements in a PowerPoint presentation
-Generated: 17 January 2022 23:13:53
+Generated: Donnerstag, 19. Mai 2022 13:11:32
   Version: 1.0.4
 Original autogenerate code written by Kris Kasprzak kris.kasprzak@yahoo.com
 Use this code without warranty
 
-Rev    Date         Author     Desc
-1.0    06/06/2020   Kasprzak   Initial code
-1.1    01/08/2022   Frank B    Improvements and TFT_eSPI_ext library
-1.0.x  08/01/2022   Bodmer     Debugged and extended functionality
+Rev    Date         Author             Desc
+1.0    06/06/2020   Kasprzak           Initial code
+1.1    01/08/2022   Frank B            Improvements and TFT_eSPI_ext library
+1.0.x  08/01/2022   Bodmer             Debugged and extended functionality
+1.0.x  19/05/2022   wurstbrot0xff      Debugged and extended functionality
 
 Requires library TFT_eSPI (can load via Arduino IDE library manager):
     https://github.com/Bodmer/TFT_eSPI
@@ -21,14 +22,27 @@ additional font files are available here:
 // You will need to include the appropriate .h files for the fonts
 // This example uses the standard fonts that comes with TFT_eSPI_ext.
 
+// Fonts in these files are available in the following sizes:
+// 8, 9, 10, 11, 12, 13, 14, 16, 18, 20, 24, 28, 32, 40, 48, 60, 72 and 96
+// This example uses size 32
 #include <font_Arial.h>
 #include <font_ArialBold.h>
 #include <font_ArialItalic.h>
 #include <font_ArialBoldItalic.h>
 
 #include <SPI.h>
+#include <TFT_eSPI.h>
 #include <TFT_eSPI_ext.h>
-TFT_eSPI_ext tft = TFT_eSPI_ext();
+
+TFT_eSPI     tft = TFT_eSPI();
+TFT_eSprite  img = TFT_eSprite(&tft);
+
+// TFT_eSPI_ext will inherit the TFT_eSPI class functions so the created -etft- instance
+// can call both the extension font class and the -tft instance TFT_eSPI base class functions.
+// So tft.fillScreen(TFT_BLUE) and etft.fillScreen(TFT_BLUE) do the same thing!
+// TFT_eSPI_ext functions can only be called using the -etft- instance
+TFT_eSPI_ext etft = TFT_eSPI_ext(&tft);
+
 
 // Rounded rectangles will be turned into Adafruit buttons
 // add code for touch screen processing
@@ -51,10 +65,10 @@ void setup(){
   // you will have to experiment as displays are different
   tft.setRotation(3);
 
-  Button1.initButton(&tft,90, 60, 81, 23, 0xF800, 0x4398, 0xFFFF, buttonLabel1, 2);
-  Button2.initButton(&tft,184, 60, 81, 23, 0xF800, 0x4398, 0xFFFF, buttonLabel2, 2);
-  Button3.initButton(&tft,278, 60, 81, 23, 0xF800, 0x4398, 0xFFFF, buttonLabel3, 2);
-  Button4.initButton(&tft,409, 30, 94, 43, 0xFFFF, 0x2A54, 0xFFFF, buttonLabel4, 2);
+  Button1.initButton(&tft,64, 56, 52, 15, 0xF800, 0x4398, 0xFFFF, buttonLabel1, 2);
+  Button2.initButton(&tft,124, 56, 52, 15, 0xF800, 0x4398, 0xFFFF, buttonLabel2, 2);
+  Button3.initButton(&tft,184, 56, 52, 15, 0xF800, 0x4398, 0xFFFF, buttonLabel3, 2);
+  Button4.initButton(&tft,267, 36, 60, 27, 0xFFFF, 0x2A54, 0xFFFF, buttonLabel4, 2);
 
 }
 
@@ -98,69 +112,69 @@ void Screen1(){
   tft.fillScreen(0xFFFF);
 
   // Isosceles Triangle 1
-  tft.fillTriangle(21, 140, 162, 140, 91, 52, 0x4398);
-  tft.drawTriangle(21, 140, 162, 140, 91, 52, 0x0000);
+  tft.fillTriangle(20, 107, 110, 107, 65, 51, 0x4398);
+  tft.drawTriangle(20, 107, 110, 107, 65, 51, 0x0000);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_14);
-  tft.setCursor(67, 111);
+  tft.setTTFFont(Arial_8,94);
+  tft.setCursor(53, 81);
   tft.print(F("TEST"));
 
   // Isosceles Triangle 2
-  tft.fillTriangle(29, 152, 153, 152, 91, 294, 0xF800);
+  tft.fillTriangle(25, 115, 104, 115, 65, 206, 0xF800);
   // Right Triangle 3
-  tft.fillTriangle(366, 59, 432, 118, 366, 118, 0xF800);
-  tft.drawTriangle(366, 59, 432, 118, 366, 118, 0xF81F);
+  tft.fillTriangle(240, 55, 283, 93, 240, 93, 0xF800);
+  tft.drawTriangle(240, 55, 283, 93, 240, 93, 0xF81F);
   // Right Triangle 4
-  tft.fillTriangle(366, 185, 432, 125, 366, 125, 0x07E0);
+  tft.fillTriangle(240, 136, 283, 98, 240, 98, 0x07E0);
   // Right Triangle 5
-  tft.fillTriangle(357, 59, 357, 118, 291, 118, 0xFE00);
-  tft.drawTriangle(357, 59, 357, 118, 291, 118, 0x0000);
+  tft.fillTriangle(235, 55, 235, 93, 193, 93, 0xFE00);
+  tft.drawTriangle(235, 55, 235, 93, 193, 93, 0x0000);
   // Right Triangle 6
-  tft.fillTriangle(357, 185, 357, 125, 291, 125, 0x001F);
+  tft.fillTriangle(235, 136, 235, 98, 193, 98, 0x001F);
   // TextBox 7
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_14);
-  tft.setCursor(27, 21);
+  tft.setTTFFont(Arial_8,94);
+  tft.setCursor(23, 33);
   tft.print(F("Isosceles triangles"));
 
   // TextBox 8
   tft.setTextColor(0x001F);
-  tft.setTTFFont(Arial_14);
-  tft.setCursor(264, 22);
+  tft.setTTFFont(Arial_8,94);
+  tft.setCursor(175, 33);
   tft.print(F("Right angle triangles"));
 
   // TextBox 9
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_14);
-  tft.setCursor(112, 284);
+  tft.setTTFFont(Arial_8,94);
+  tft.setCursor(82, 201);
   tft.print(F("Shape outline and fill is optional"));
 
-  tft.drawLine(251, 149, 163, 256, 0x001F);
+  tft.drawLine(167, 113, 111, 182, 0x001F);
   // TextBox 12
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_14);
-  tft.setCursor(180, 148);
+  tft.setTTFFont(Arial_8,94);
+  tft.setCursor(125, 114);
   tft.print(F("Lines"));
 
-  tft.drawLine(189, 183, 241, 237, 0x07E0);
-  tft.drawLine(170, 226, 238, 208, 0xF800);
+  tft.drawLine(128, 135, 161, 170, 0x07E0);
+  tft.drawLine(115, 162, 158, 150, 0xF800);
   // Oval 17
-  tft.fillEllipse(361, 213, 51, 17, 0x001F);
-  tft.fillEllipse(361, 213, 50, 16, 0xF81F);
+  tft.fillEllipse(237, 154, 33, 11, 0x001F);
+  tft.fillEllipse(237, 154, 32, 10, 0xF81F);
   // Oval 18
-  tft.drawEllipse(361, 257, 51, 17, 0xF800);
+  tft.drawEllipse(237, 182, 33, 11, 0xF800);
   // TextBox 19
   tft.setTextColor(0xF800);
-  tft.setTTFFont(Arial_14);
-  tft.setCursor(223, 244);
+  tft.setTTFFont(Arial_8,94);
+  tft.setCursor(152, 175);
   tft.print(F("Ellipses"));
 
   // Rectangle 20
-  tft.fillRect(163, 59, 116, 50, 0x2A91);
-  tft.fillRect(164, 60, 114, 48, 0xC716);
+  tft.fillRect(111, 55, 75, 32, 0x2A91);
+  tft.fillRect(112, 56, 73, 30, 0xC716);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(179, 77);
+  tft.setTTFFont(Arial_7,67);
+  tft.setCursor(121, 67);
   tft.print(F("Rectangles"));
 
 
@@ -173,41 +187,41 @@ void Screen2(){
   tft.fillScreen(0xFFFF);
 
   // TextBox 1
-  tft.fillRectHGradient(0, 16, 480, 51, 0xF800, 0xFE00);
+  tft.fillRectHGradient(7, 28, 307, 37, 0xF800, 0xFE00);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_24);
-  tft.setCursor(178, 29);
+  tft.setTTFFont(Arial_15,32);
+  tft.setCursor(120, 38);
   tft.print(F("Text box"));
 
   // TextBox 8
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_10);
-  tft.setCursor(10, 104);
+  tft.setTTFFont(Arial_6,39);
+  tft.setCursor(17, 86);
   tft.print(F("Text boxes with optional fill and outline  are supported"));
 
   // TextBox 10
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_10);
-  tft.setCursor(184, 130);
+  tft.setTTFFont(Arial_6,39);
+  tft.setCursor(121, 103);
   tft.print(F("A gradient fill can be horizontal or vertical only"));
 
   // TextBox 14
-  tft.drawRect(126, 229, 192, 45, 0xF800);
+  tft.drawRect(87, 164, 123, 33, 0xF800);
   tft.setTextColor(0xF800);
-  tft.setTTFFont(Arial_10);
-  tft.setCursor(136, 237);
+  tft.setTTFFont(Arial_6,39);
+  tft.setCursor(97, 171);
   tft.print(F("Text wrapping like this in boxes not supported"));
 
   // TextBox 15
   tft.setTextColor(0xF800);
-  tft.setTTFFont(Arial_10_Bold);
-  tft.setCursor(59, 176);
+  tft.setTTFFont(Arial_6,39_Bold);
+  tft.setCursor(45, 132);
   tft.print(F("Use a font face that will be available to sketch e.g. Arial"));
 
   // TextBox 18
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_10);
-  tft.setCursor(121, 78);
+  tft.setTTFFont(Arial_6,39);
+  tft.setCursor(84, 69);
   tft.print(F("Text can be justified left, right or centre"));
 
 
@@ -221,19 +235,19 @@ void Screen3(){
 
   // TextBox 8
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(15, 155);
+  tft.setTTFFont(Arial_7,67);
+  tft.setCursor(19, 119);
   tft.print(F("Rounded rectangles create code for the library button class"));
 
-  tft.drawLine(120, 80, 195, 153, 0x4398);
-  tft.drawLine(195, 153, 266, 80, 0x4398);
-  tft.drawLine(195, 153, 187, 84, 0x4398);
+  tft.drawLine(83, 69, 131, 116, 0x4398);
+  tft.drawLine(131, 116, 176, 69, 0x4398);
+  tft.drawLine(131, 115, 126, 71, 0x4398);
 
-  tft.setTTFFont(Arial_10);
+  tft.setTTFFont(Arial_6,39);
   Button1.drawButton();
-  tft.setTTFFont(Arial_10);
+  tft.setTTFFont(Arial_6,39);
   Button2.drawButton();
-  tft.setTTFFont(Arial_10);
+  tft.setTTFFont(Arial_6,39);
   Button3.drawButton();
 
 }
@@ -245,118 +259,118 @@ void Screen4(){
 
   // TextBox 1
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_14);
-  tft.setCursor(145, 70);
+  tft.setTTFFont(Arial_8,94);
+  tft.setCursor(98, 64);
   tft.print(F("Tables can be created"));
 
   // Table 3
-  tft.drawFastHLine(57, 100, 344, 0xFFFF);
-  tft.fillRect(57, 100, 86, 30, 0x4398);
+  tft.drawFastHLine(43, 81, 220, 0xFFFF);
+  tft.fillRect(43, 81, 55, 20, 0x4398);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_12_Bold);
-  tft.setCursor(67, 111 );
+  tft.setTTFFont(Arial_8_Bold);
+  tft.setCursor(49, 89 );
   tft.print(F("Test"));
 
-  tft.fillRect(143, 100, 86, 30, 0x4398);
+  tft.fillRect(98, 81, 55, 20, 0x4398);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_12_Bold);
-  tft.setCursor(153, 111 );
+  tft.setTTFFont(Arial_8_Bold);
+  tft.setCursor(104, 89 );
   tft.print(F("Test"));
 
-  tft.fillRect(229, 100, 86, 30, 0x4398);
+  tft.fillRect(153, 81, 55, 20, 0x4398);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_12_Bold);
-  tft.setCursor(239, 111 );
+  tft.setTTFFont(Arial_8_Bold);
+  tft.setCursor(159, 89 );
   tft.print(F("Test"));
 
-  tft.fillRect(315, 100, 86, 30, 0x4398);
+  tft.fillRect(208, 81, 55, 20, 0x4398);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_12_Bold);
-  tft.setCursor(325, 111 );
+  tft.setTTFFont(Arial_8_Bold);
+  tft.setCursor(214, 89 );
   tft.print(F("Test"));
 
-  tft.drawFastHLine(57, 130, 344, 0xFFFF);
-  tft.fillRect(57, 130, 86, 30, 0xCEBD);
+  tft.drawFastHLine(43, 101, 220, 0xFFFF);
+  tft.fillRect(43, 101, 55, 20, 0xCEBD);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(67, 141 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(49, 109 );
   tft.print(F("123"));
 
-  tft.fillRect(143, 130, 86, 30, 0xCEBD);
+  tft.fillRect(98, 101, 55, 20, 0xCEBD);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(153, 141 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(104, 109 );
   tft.print(F("456"));
 
-  tft.fillRect(229, 130, 86, 30, 0xCEBD);
+  tft.fillRect(153, 101, 55, 20, 0xCEBD);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(239, 141 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(159, 109 );
   tft.print(F("789"));
 
-  tft.fillRect(315, 130, 86, 30, 0xCEBD);
+  tft.fillRect(208, 101, 55, 20, 0xCEBD);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(325, 141 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(214, 109 );
   tft.print(F("…"));
 
-  tft.drawFastHLine(57, 160, 344, 0xFFFF);
-  tft.fillRect(57, 160, 86, 30, 0xEF5E);
+  tft.drawFastHLine(43, 121, 220, 0xFFFF);
+  tft.fillRect(43, 121, 55, 20, 0xEF5E);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(67, 171 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(49, 129 );
   tft.print(F("abc"));
 
-  tft.fillRect(143, 160, 86, 30, 0xEF5E);
+  tft.fillRect(98, 121, 55, 20, 0xEF5E);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(153, 171 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(104, 129 );
   tft.print(F("def"));
 
-  tft.fillRect(229, 160, 86, 30, 0xEF5E);
+  tft.fillRect(153, 121, 55, 20, 0xEF5E);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(239, 171 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(159, 129 );
   tft.print(F("ghi"));
 
-  tft.fillRect(315, 160, 86, 30, 0xEF5E);
+  tft.fillRect(208, 121, 55, 20, 0xEF5E);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(325, 171 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(214, 129 );
   tft.print(F("…"));
 
-  tft.drawFastHLine(57, 190, 344, 0xFFFF);
-  tft.fillRect(57, 190, 86, 30, 0xCEBD);
+  tft.drawFastHLine(43, 141, 220, 0xFFFF);
+  tft.fillRect(43, 141, 55, 20, 0xCEBD);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(67, 201 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(49, 149 );
   tft.print(F("…"));
 
-  tft.fillRect(143, 190, 86, 30, 0xCEBD);
+  tft.fillRect(98, 141, 55, 20, 0xCEBD);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(153, 201 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(104, 149 );
   tft.print(F("…"));
 
-  tft.fillRect(229, 190, 86, 30, 0xCEBD);
+  tft.fillRect(153, 141, 55, 20, 0xCEBD);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(239, 201 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(159, 149 );
   tft.print(F("…"));
 
-  tft.fillRect(315, 190, 86, 30, 0xCEBD);
+  tft.fillRect(208, 141, 55, 20, 0xCEBD);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(325, 201 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(214, 149 );
   tft.print(F("…"));
 
-  tft.drawFastHLine(57, 220, 344, 0xFFFF);
-  tft.drawFastHLine(57, 100, 344, 0xFFFF);
-  tft.drawFastVLine(57, 100, 121, 0xFFFF);
-  tft.drawFastVLine(143, 100, 121, 0xFFFF);
-  tft.drawFastVLine(229, 100, 121, 0xFFFF);
-  tft.drawFastVLine(315, 100, 121, 0xFFFF);
-  tft.drawFastVLine(401, 100, 121, 0xFFFF);
+  tft.drawFastHLine(43, 161, 220, 0xFFFF);
+  tft.drawFastHLine(43, 81, 220, 0xFFFF);
+  tft.drawFastVLine(43, 81, 81, 0xFFFF);
+  tft.drawFastVLine(98, 81, 81, 0xFFFF);
+  tft.drawFastVLine(153, 81, 81, 0xFFFF);
+  tft.drawFastVLine(208, 81, 81, 0xFFFF);
+  tft.drawFastVLine(263, 81, 81, 0xFFFF);
 
 
 
@@ -368,120 +382,120 @@ void Screen5(){
   tft.fillScreen(0xFFFF);
 
   // Table 1
-  tft.drawFastHLine(54, 53, 347, 0x0000);
-  tft.fillRect(54, 53, 111, 41, 0xEBE6);
+  tft.drawFastHLine(41, 51, 222, 0x0000);
+  tft.fillRect(41, 51, 71, 26, 0xEBE6);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_12_Bold);
-  tft.setCursor(70, 67 );
+  tft.setTTFFont(Arial_8_Bold);
+  tft.setCursor(51, 61 );
   tft.print(F("  integer"));
 
-  tft.fillRect(165, 53, 117, 41, 0xEBE6);
+  tft.fillRect(112, 51, 75, 26, 0xEBE6);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_12_Bold);
-  tft.setCursor(181, 67 );
+  tft.setTTFFont(Arial_8_Bold);
+  tft.setCursor(122, 61 );
   tft.print(F("    float"));
 
-  tft.fillRect(282, 53, 118, 41, 0xEBE6);
+  tft.fillRect(187, 51, 76, 26, 0xEBE6);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_12_Bold);
-  tft.setCursor(298, 67 );
+  tft.setTTFFont(Arial_8_Bold);
+  tft.setCursor(197, 61 );
   tft.print(F("     char"));
 
-  tft.drawFastHLine(54, 94, 347, 0x0000);
-  tft.fillRect(54, 94, 111, 41, 0xFF7D);
+  tft.drawFastHLine(41, 77, 222, 0x0000);
+  tft.fillRect(41, 77, 71, 26, 0xFF7D);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(70, 108 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(51, 87 );
   static int tab11 = 0;
   tft.print(tab11);
 
-  tft.fillRect(165, 94, 117, 41, 0xFF7D);
+  tft.fillRect(112, 77, 75, 26, 0xFF7D);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(181, 108 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(122, 87 );
   static float tab21 = 0.00;
   tft.print(tab21);
 
-  tft.fillRect(282, 94, 118, 41, 0xFF7D);
+  tft.fillRect(187, 77, 76, 26, 0xFF7D);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(298, 108 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(197, 87 );
   const char tab31[] = "Text";
   tft.print(tab31);
 
-  tft.drawFastHLine(54, 135, 347, 0x0000);
-  tft.fillRect(54, 135, 111, 41, 0xFFFF);
+  tft.drawFastHLine(41, 103, 222, 0x0000);
+  tft.fillRect(41, 103, 71, 26, 0xFFFF);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(70, 149 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(51, 113 );
   static int tab12 = 0;
   tft.print(tab12);
 
-  tft.fillRect(165, 135, 117, 41, 0xFFFF);
+  tft.fillRect(112, 103, 75, 26, 0xFFFF);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(181, 149 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(122, 113 );
   static float tab22 = 0.00;
   tft.print(tab22);
 
-  tft.fillRect(282, 135, 118, 41, 0xFFFF);
+  tft.fillRect(187, 103, 76, 26, 0xFFFF);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(298, 149 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(197, 113 );
   const char tab32[] = "Text";
   tft.print(tab32);
 
-  tft.drawFastHLine(54, 176, 347, 0x0000);
-  tft.fillRect(54, 176, 111, 41, 0xFF7D);
+  tft.drawFastHLine(41, 129, 222, 0x0000);
+  tft.fillRect(41, 129, 71, 26, 0xFF7D);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(70, 190 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(51, 139 );
   static int tab13 = 0;
   tft.print(tab13);
 
-  tft.fillRect(165, 176, 117, 41, 0xFF7D);
+  tft.fillRect(112, 129, 75, 26, 0xFF7D);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(181, 190 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(122, 139 );
   static float tab23 = 0.00;
   tft.print(tab23);
 
-  tft.fillRect(282, 176, 118, 41, 0xFF7D);
+  tft.fillRect(187, 129, 76, 26, 0xFF7D);
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_12);
-  tft.setCursor(298, 190 );
+  tft.setTTFFont(Arial_8);
+  tft.setCursor(197, 139 );
   const char tab33[] = "Text";
   tft.print(tab33);
 
-  tft.drawFastHLine(54, 217, 347, 0x0000);
-  tft.drawFastHLine(54, 53, 347, 0x0000);
-  tft.drawFastVLine(54, 53, 165, 0x0000);
-  tft.drawFastVLine(165, 53, 165, 0x0000);
-  tft.drawFastVLine(282, 53, 165, 0x0000);
-  tft.drawFastVLine(400, 53, 165, 0x0000);
+  tft.drawFastHLine(41, 155, 222, 0x0000);
+  tft.drawFastHLine(41, 51, 222, 0x0000);
+  tft.drawFastVLine(41, 51, 106, 0x0000);
+  tft.drawFastVLine(112, 51, 106, 0x0000);
+  tft.drawFastVLine(187, 51, 106, 0x0000);
+  tft.drawFastVLine(263, 51, 106, 0x0000);
 
   // TextBox 2
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_20);
-  tft.setCursor(50, 20);
+  tft.setTTFFont(Arial_12,77);
+  tft.setCursor(38, 30);
   tft.print(F("Tables can contain variables"));
 
   // TextBox 3
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_10);
-  tft.setCursor(15, 227);
+  tft.setTTFFont(Arial_6,39);
+  tft.setCursor(19, 164);
   tft.print(F("The =xxx means create an integer variable with name xxx in sketch"));
 
   // TextBox 12
   tft.setTextColor(0x0000);
-  tft.setTTFFont(Arial_10);
-  tft.setCursor(20, 249);
+  tft.setTTFFont(Arial_6,39);
+  tft.setCursor(23, 178);
   tft.print(F("Add optional . for float and $ for a char array variable"));
 
   // TextBox 13
   tft.setTextColor(0xF800);
-  tft.setTTFFont(Arial_10);
-  tft.setCursor(147, 289);
+  tft.setTTFFont(Arial_6,39);
+  tft.setCursor(101, 204);
   tft.print(F("See example on next sheet"));
 
 
@@ -494,200 +508,200 @@ void Screen6(){
   tft.fillScreen(0xFFFF);
 
   // TextBox 2
-  tft.fillRect(0, 0, 480, 61, 0x39C7);
+  tft.fillRect(7, 18, 307, 39, 0x39C7);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_20_Bold);
-  tft.setCursor(6, 21);
+  tft.setTTFFont(Arial_12,77_Bold);
+  tft.setCursor(10, 30);
   tft.print(F("HOME AUTOMATION"));
 
   // Rectangle 5
-  tft.fillRectHGradient(13, 78, 221, 229, 0x0861, 0x4A69);
+  tft.fillRectHGradient(15, 68, 142, 147, 0x0861, 0x4A69);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_18_Bold);
-  tft.setCursor(13, 84);
+  tft.setTTFFont(Arial_8,99_Bold);
+  tft.setCursor(15, 71);
   tft.print(F("TIME"));
 
   // Rectangle 11
-  tft.fillRectHGradient(245, 78, 111, 231, 0x0861, 0x4A69);
+  tft.fillRectHGradient(163, 68, 71, 148, 0x0861, 0x4A69);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_18_Bold);
-  tft.setCursor(245, 84);
+  tft.setTTFFont(Arial_8,99_Bold);
+  tft.setCursor(163, 71);
   tft.print(F("TEMP"));
 
   // Rectangle 12
-  tft.fillRectHGradient(361, 78, 111, 231, 0x0861, 0x4A69);
+  tft.fillRectHGradient(237, 68, 71, 148, 0x0861, 0x4A69);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_18_Bold);
-  tft.setCursor(361, 84);
+  tft.setTTFFont(Arial_8,99_Bold);
+  tft.setCursor(237, 71);
   tft.print(F("%RH"));
 
   // TextBox 19
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_18);
-  tft.setCursor(15, 107);
+  tft.setTTFFont(Arial_8,99);
+  tft.setCursor(16, 85);
   const char timeNow[] = "Text";
   tft.print(timeNow);
 
   // TextBox 27
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_18);
-  tft.setCursor(251, 165);
+  tft.setTTFFont(Arial_8,99);
+  tft.setCursor(167, 122);
   static float tmax = 0.00;
   tft.print(tmax);
 
   // TextBox 29
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_18);
-  tft.setCursor(252, 286);
+  tft.setTTFFont(Arial_8,99);
+  tft.setCursor(168, 199);
   static float tnow = 0.00;
   tft.print(tnow);
 
   // TextBox 30
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_18);
-  tft.setCursor(367, 286);
+  tft.setTTFFont(Arial_8,99);
+  tft.setCursor(241, 199);
   static int rhnow = 0;
   tft.print(rhnow);
 
   // Table 8
-  tft.drawFastHLine(12, 136, 221, 0xFFFF);
-  tft.fillRect(12, 136, 112, 43, 0x010C);
+  tft.drawFastHLine(14, 105, 142, 0xFFFF);
+  tft.fillRect(14, 105, 71, 27, 0x010C);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_13_Bold);
-  tft.setCursor(23, 148 );
+  tft.setTTFFont(Arial_9_Bold);
+  tft.setCursor(21, 113 );
   tft.print(F("Door"));
 
-  tft.fillRect(124, 136, 109, 43, 0x010C);
+  tft.fillRect(85, 105, 69, 27, 0x010C);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_13_Bold);
-  tft.setCursor(135, 148 );
+  tft.setTTFFont(Arial_9_Bold);
+  tft.setCursor(92, 113 );
   tft.print(F("Status"));
 
-  tft.drawFastHLine(12, 179, 221, 0xFFFF);
+  tft.drawFastHLine(14, 132, 142, 0xFFFF);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_13);
-  tft.setCursor(18, 186 );
+  tft.setTTFFont(Arial_9);
+  tft.setCursor(18, 137 );
   tft.print(F("Front"));
 
   tft.setTextColor(0xF800);
-  tft.setTTFFont(Arial_13);
-  tft.setCursor(130, 186 );
+  tft.setTTFFont(Arial_9);
+  tft.setCursor(89, 137 );
   const char frontStat[] = "Text";
   tft.print(frontStat);
 
-  tft.drawFastHLine(12, 204, 221, 0xFFFF);
+  tft.drawFastHLine(14, 148, 142, 0xFFFF);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_13);
-  tft.setCursor(18, 211 );
+  tft.setTTFFont(Arial_9);
+  tft.setCursor(18, 153 );
   tft.print(F("Back"));
 
   tft.setTextColor(0x058A);
-  tft.setTTFFont(Arial_13);
-  tft.setCursor(130, 211 );
+  tft.setTTFFont(Arial_9);
+  tft.setCursor(89, 153 );
   const char backStat[] = "Text";
   tft.print(backStat);
 
-  tft.drawFastHLine(12, 229, 221, 0xFFFF);
+  tft.drawFastHLine(14, 164, 142, 0xFFFF);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_13);
-  tft.setCursor(18, 236 );
+  tft.setTTFFont(Arial_9);
+  tft.setCursor(18, 169 );
   tft.print(F("Garage"));
 
   tft.setTextColor(0xF800);
-  tft.setTTFFont(Arial_13);
-  tft.setCursor(130, 236 );
+  tft.setTTFFont(Arial_9);
+  tft.setCursor(89, 169 );
   const char gargStat[] = "Text";
   tft.print(gargStat);
 
-  tft.drawFastHLine(12, 254, 221, 0xFFFF);
+  tft.drawFastHLine(14, 180, 142, 0xFFFF);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_13);
-  tft.setCursor(18, 261 );
+  tft.setTTFFont(Arial_9);
+  tft.setCursor(18, 185 );
   tft.print(F("Side"));
 
   tft.setTextColor(0x058A);
-  tft.setTTFFont(Arial_13);
-  tft.setCursor(130, 261 );
+  tft.setTTFFont(Arial_9);
+  tft.setCursor(89, 185 );
   const char sideStat[] = "Text";
   tft.print(sideStat);
 
-  tft.drawFastHLine(12, 279, 221, 0xFFFF);
+  tft.drawFastHLine(14, 196, 142, 0xFFFF);
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_13);
-  tft.setCursor(18, 286 );
+  tft.setTTFFont(Arial_9);
+  tft.setCursor(18, 201 );
   tft.print(F("Porch"));
 
   tft.setTextColor(0xF800);
-  tft.setTTFFont(Arial_13);
-  tft.setCursor(130, 286 );
+  tft.setTTFFont(Arial_9);
+  tft.setCursor(89, 201 );
   const char porchStat[] = "Text";
   tft.print(porchStat);
 
-  tft.drawFastHLine(12, 304, 221, 0xFFFF);
-  tft.drawFastHLine(12, 136, 221, 0xFFFF);
-  tft.drawFastVLine(12, 136, 171, 0xFFFF);
-  tft.drawFastVLine(124, 136, 171, 0xFFFF);
-  tft.drawFastVLine(233, 136, 171, 0xFFFF);
+  tft.drawFastHLine(14, 227, 142, 0xFFFF);
+  tft.drawFastHLine(14, 105, 142, 0xFFFF);
+  tft.drawFastVLine(14, 105, 125, 0xFFFF);
+  tft.drawFastVLine(85, 105, 125, 0xFFFF);
+  tft.drawFastVLine(154, 105, 125, 0xFFFF);
 
   // TextBox 32
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_18);
-  tft.setCursor(368, 165);
+  tft.setTTFFont(Arial_8,99);
+  tft.setCursor(241, 122);
   static int rhmax = 0;
   tft.print(rhmax);
 
   // TextBox 33
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_18);
-  tft.setCursor(252, 225);
+  tft.setTTFFont(Arial_8,99);
+  tft.setCursor(167, 160);
   static float tmin = 0.00;
   tft.print(tmin);
 
   // TextBox 34
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_18);
-  tft.setCursor(367, 225);
+  tft.setTTFFont(Arial_8,99);
+  tft.setCursor(241, 160);
   static int rhmin = 0;
   tft.print(rhmin);
 
   // TextBox 23
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_18_Bold);
-  tft.setCursor(366, 262);
+  tft.setTTFFont(Arial_8,99_Bold);
+  tft.setCursor(241, 184);
   tft.print(F("NOW"));
 
   // TextBox 24
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_18_Bold);
-  tft.setCursor(367, 142);
+  tft.setTTFFont(Arial_8,99_Bold);
+  tft.setCursor(241, 107);
   tft.print(F("MAX"));
 
   // TextBox 25
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_18_Bold);
-  tft.setCursor(366, 202);
+  tft.setTTFFont(Arial_8,99_Bold);
+  tft.setCursor(241, 146);
   tft.print(F("MIN"));
 
   // TextBox 26
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_18_Bold);
-  tft.setCursor(248, 262);
+  tft.setTTFFont(Arial_8,99_Bold);
+  tft.setCursor(165, 184);
   tft.print(F("NOW"));
 
   // TextBox 28
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_18_Bold);
-  tft.setCursor(248, 142);
+  tft.setTTFFont(Arial_8,99_Bold);
+  tft.setCursor(165, 107);
   tft.print(F("MAX"));
 
   // TextBox 31
   tft.setTextColor(0xFFFF);
-  tft.setTTFFont(Arial_18_Bold);
-  tft.setCursor(248, 202);
+  tft.setTTFFont(Arial_8,99_Bold);
+  tft.setCursor(165, 146);
   tft.print(F("MIN"));
 
 
-  tft.setTTFFont(Arial_20);
+  tft.setTTFFont(Arial_12,77);
   Button4.drawButton();
 
 }
